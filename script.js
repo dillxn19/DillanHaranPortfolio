@@ -197,13 +197,14 @@ if (statsSection) {
                         suffix = 'K+';
                         stat.textContent = '$0K+';
                         setTimeout(() => {
+                            let current = 0;
+                            const increment = target / 125;
                             const timer = setInterval(() => {
-                                let current = parseFloat(stat.textContent.replace(/[$K+]/g, ''));
+                                current += increment;
                                 if (current >= target) {
                                     stat.textContent = prefix + target + suffix;
                                     clearInterval(timer);
                                 } else {
-                                    current += target / 125;
                                     stat.textContent = prefix + Math.floor(current) + suffix;
                                 }
                             }, 16);
