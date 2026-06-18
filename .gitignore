@@ -48,4 +48,10 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Local/misc
+Testing/
+requirements.txt
+simple_traffic.py
+simulate_traffic.py
+
 # Made with Bob

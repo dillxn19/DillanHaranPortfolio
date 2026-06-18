@@ -1,15 +1,13 @@
-// ===== Mobile Navigation Toggle =====
+// ===== Mobile Navigation =====
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-// Toggle mobile menu
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
 });
 
-// Close mobile menu when clicking on a link
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         hamburger.classList.remove('active');
@@ -17,7 +15,6 @@ navLinks.forEach(link => {
     });
 });
 
-// Close mobile menu when clicking outside
 document.addEventListener('click', (e) => {
     if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
         hamburger.classList.remove('active');
@@ -30,304 +27,254 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
-        
         if (target) {
             const navHeight = document.querySelector('.navbar').offsetHeight;
-            const targetPosition = target.offsetTop - navHeight;
-            
             window.scrollTo({
-                top: targetPosition,
+                top: target.offsetTop - navHeight,
                 behavior: 'smooth'
             });
         }
     });
 });
 
-// ===== Navbar Background on Scroll =====
+// ===== Navbar on Scroll =====
 const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    // Add shadow when scrolled
-    if (currentScroll > 50) {
-        navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+    if (window.pageYOffset > 50) {
+        navbar.classList.add('scrolled');
     } else {
-        navbar.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
+        navbar.classList.remove('scrolled');
     }
-    
-    lastScroll = currentScroll;
 });
 
-// ===== Active Navigation Link on Scroll =====
+// ===== Active Nav Link =====
 const sections = document.querySelectorAll('section[id]');
 
 function highlightNavigation() {
     const scrollY = window.pageYOffset;
-    
     sections.forEach(section => {
-        const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
+        const sectionTop = section.offsetTop - 120;
         const sectionId = section.getAttribute('id');
         const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-        
-        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-            navLinks.forEach(link => link.classList.remove('active'));
-            if (navLink) {
-                navLink.classList.add('active');
-            }
+        if (scrollY > sectionTop && scrollY <= sectionTop + section.offsetHeight) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            if (navLink) navLink.classList.add('active');
         }
     });
 }
 
 window.addEventListener('scroll', highlightNavigation);
 
-// ===== Scroll Reveal Animation =====
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// ===== Particle System =====
+(function initParticles() {
+    const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
 
-const observer = new IntersectionObserver((entries) => {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 1.8 + 0.3;
+            this.speedX = (Math.random() - 0.5) * 0.4;
+            this.speedY = (Math.random() - 0.5) * 0.4;
+            this.opacity = Math.random() * 0.4 + 0.05;
+            const hues = ['129, 140, 248', '244, 114, 182', '45, 212, 191'];
+            this.color = hues[Math.floor(Math.random() * hues.length)];
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < -5 || this.x > canvas.width + 5 ||
+                this.y < -5 || this.y > canvas.height + 5) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.globalAlpha = this.opacity;
+            ctx.fillStyle = `rgba(${this.color}, 1)`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
+    function init() {
+        resize();
+        particles = Array.from({ length: 60 }, () => new Particle());
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        animationId = requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+        cancelAnimationFrame(animationId);
+        init();
+        animate();
+    });
+
+    // Only run on the hero section, pause when scrolled away
+    const heroSection = document.getElementById('home');
+    const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (!animationId) animate();
+            } else {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        });
+    }, { threshold: 0 });
+
+    if (heroSection) visibilityObserver.observe(heroSection);
+
+    init();
+    animate();
+})();
+
+// ===== Scroll Reveal with Stagger =====
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            revealObserver.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-// Observe elements for animation
-const animateElements = document.querySelectorAll('.timeline-item, .project-card, .skill-category, .leadership-card, .about-stats');
+function setupReveal(selector, stagger = true) {
+    const els = document.querySelectorAll(selector);
+    els.forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(28px)';
+        el.style.transition = `opacity 0.6s ease ${stagger ? i * 0.1 : 0}s, transform 0.6s ease ${stagger ? i * 0.1 : 0}s`;
+        revealObserver.observe(el);
+    });
+}
 
-animateElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
+setupReveal('.timeline-item', true);
+setupReveal('.project-card', true);
+setupReveal('.skill-category', true);
+setupReveal('.leadership-card', true);
+setupReveal('.about-stats', false);
+
+// ===== Timeline Dot Hover =====
+document.querySelectorAll('.timeline-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        const dot = item.querySelector('.timeline-dot');
+        if (dot) {
+            dot.style.transform = 'scale(1.5)';
+            dot.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        }
+    });
+    item.addEventListener('mouseleave', () => {
+        const dot = item.querySelector('.timeline-dot');
+        if (dot) dot.style.transform = 'scale(1)';
+    });
 });
 
-// ===== Typing Effect for Hero Subtitle =====
+// ===== Typing Effect =====
 const subtitle = document.querySelector('.hero-subtitle');
 if (subtitle) {
     const text = subtitle.textContent;
     subtitle.textContent = '';
     let i = 0;
-    
+
     function typeWriter() {
         if (i < text.length) {
             subtitle.textContent += text.charAt(i);
             i++;
-            setTimeout(typeWriter, 50);
+            setTimeout(typeWriter, 42);
         }
     }
-    
-    // Start typing effect after a short delay
-    setTimeout(typeWriter, 500);
+
+    setTimeout(typeWriter, 700);
 }
-
-// ===== Parallax Effect for Hero Section ===== (Disabled to prevent overlap)
-// const hero = document.querySelector('.hero');
-//
-// window.addEventListener('scroll', () => {
-//     const scrolled = window.pageYOffset;
-//     const parallaxSpeed = 0.5;
-//
-//     if (hero && scrolled < hero.offsetHeight) {
-//         hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-//     }
-// });
-
-// ===== Add hover effect to timeline items =====
-const timelineItems = document.querySelectorAll('.timeline-item');
-
-timelineItems.forEach(item => {
-    item.addEventListener('mouseenter', function() {
-        const dot = this.querySelector('.timeline-dot');
-        if (dot) {
-            dot.style.transform = 'scale(1.5)';
-            dot.style.transition = 'transform 0.3s ease';
-        }
-    });
-    
-    item.addEventListener('mouseleave', function() {
-        const dot = this.querySelector('.timeline-dot');
-        if (dot) {
-            dot.style.transform = 'scale(1)';
-        }
-    });
-});
 
 // ===== Counter Animation for Stats =====
-const stats = document.querySelectorAll('.stat h3');
 const statsSection = document.querySelector('.about-stats');
 
-function animateCounter(element, target, suffix, duration = 2000) {
-    const start = 0;
-    const increment = target / (duration / 16);
-    let current = start;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target + suffix;
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(current) + suffix;
-        }
-    }, 16);
+function animateValue(el, from, to, duration, prefix, suffix) {
+    const start = performance.now();
+    function tick(now) {
+        const elapsed = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - elapsed, 3);
+        const current = from + (to - from) * eased;
+        el.textContent = prefix + (Number.isInteger(to) ? Math.floor(current) : current.toFixed(2)) + suffix;
+        if (elapsed < 1) requestAnimationFrame(tick);
+        else el.textContent = prefix + to + suffix;
+    }
+    requestAnimationFrame(tick);
 }
 
-// Observe stats section for counter animation
 if (statsSection) {
     const statsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                stats.forEach(stat => {
-                    const text = stat.textContent;
-                    let target;
-                    let suffix;
-                    let prefix = '';
-                    
-                    if (text.includes('$')) {
-                        // Handle currency with K
-                        prefix = '$';
-                        target = parseFloat(text.replace(/[$K+]/g, ''));
-                        suffix = 'K+';
-                        stat.textContent = '$0K+';
-                        setTimeout(() => {
-                            let current = 0;
-                            const increment = target / 125;
-                            const timer = setInterval(() => {
-                                current += increment;
-                                if (current >= target) {
-                                    stat.textContent = prefix + target + suffix;
-                                    clearInterval(timer);
-                                } else {
-                                    stat.textContent = prefix + Math.floor(current) + suffix;
-                                }
-                            }, 16);
-                        }, 200);
-                    } else if (text.includes('K')) {
-                        target = parseFloat(text.replace(/[K+]/g, ''));
-                        suffix = 'K+';
-                        stat.textContent = '0K+';
-                        setTimeout(() => {
-                            animateCounter(stat, target, suffix, 2000);
-                        }, 200);
-                    } else if (text.includes('.')) {
-                        target = parseFloat(text);
-                        suffix = '';
-                        stat.textContent = '0.00';
-                        setTimeout(() => {
-                            let current = 0;
-                            const increment = target / 100;
-                            const timer = setInterval(() => {
-                                current += increment;
-                                if (current >= target) {
-                                    stat.textContent = target.toFixed(2);
-                                    clearInterval(timer);
-                                } else {
-                                    stat.textContent = current.toFixed(2);
-                                }
-                            }, 20);
-                        }, 200);
+                document.querySelectorAll('.stat h3').forEach(stat => {
+                    const raw = stat.textContent.trim();
+                    if (raw.startsWith('$') && raw.includes('M')) {
+                        const val = parseFloat(raw.replace(/[$M+]/g, ''));
+                        animateValue(stat, 0, val, 1800, '$', 'M+');
+                    } else if (raw.startsWith('$') && raw.includes('K')) {
+                        const val = parseFloat(raw.replace(/[$K+]/g, ''));
+                        animateValue(stat, 0, val, 1800, '$', 'K+');
+                    } else if (raw.includes('.')) {
+                        animateValue(stat, 0, parseFloat(raw), 1800, '', '');
                     } else {
-                        target = parseInt(text.replace(/\+/g, ''));
-                        suffix = '+';
-                        stat.textContent = '0+';
-                        setTimeout(() => {
-                            animateCounter(stat, target, suffix, 2000);
-                        }, 200);
+                        const val = parseInt(raw.replace(/\+/g, ''));
+                        animateValue(stat, 0, val, 1800, '', '+');
                     }
                 });
                 statsObserver.unobserve(entry.target);
             }
         });
     }, { threshold: 0.5 });
-    
+
     statsObserver.observe(statsSection);
 }
 
-// ===== Add ripple effect to buttons =====
-const buttons = document.querySelectorAll('.btn, .social-btn');
-
-buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
+// ===== Ripple Effect =====
+document.querySelectorAll('.btn, .social-btn').forEach(button => {
+    button.addEventListener('click', function (e) {
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
         ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
+        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
         ripple.classList.add('ripple');
-        
         this.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
+        setTimeout(() => ripple.remove(), 600);
     });
 });
 
-// Add ripple CSS dynamically
-const style = document.createElement('style');
-style.textContent = `
-    .btn, .social-btn {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.6);
-        transform: scale(0);
-        animation: ripple-animation 0.6s ease-out;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// ===== Lazy Loading for Images (if any are added later) =====
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    const lazyImages = document.querySelectorAll('img.lazy');
-    lazyImages.forEach(img => imageObserver.observe(img));
-}
-
-// ===== Console Message =====
-console.log('%c👋 Welcome to Dillan Haran\'s Portfolio!', 'color: #6366f1; font-size: 20px; font-weight: bold;');
-console.log('%cInterested in the code? Check out the source!', 'color: #ec4899; font-size: 14px;');
-
-// ===== Initialize on page load =====
+// ===== Init =====
 window.addEventListener('load', () => {
-    // Trigger initial highlight
     highlightNavigation();
-    
-    // Add loaded class to body for any CSS transitions
     document.body.classList.add('loaded');
 });
 
-// Made with Bob
+console.log('%c Dillan Haran — Portfolio', 'color: #818cf8; font-size: 18px; font-weight: bold;');
+console.log('%c IBM Client Engineering Intern · AI Builder · Founder', 'color: #4589ff; font-size: 13px;');

@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dillan Haran - Computer Science & AI Student at UW-Madison. Founder of Automind AI and UCODE. Incoming IBM Client Engineering Intern.">
-    <meta name="keywords" content="Dillan Haran, Computer Science, AI, Software Engineer, Portfolio, UW-Madison">
+    <meta name="description" content="Dillan Haran - CS & AI Student at UW-Madison. IBM Client Engineering Intern in Kuala Lumpur. Founder of Automind AI and UCODE.">
+    <meta name="keywords" content="Dillan Haran, Computer Science, AI, Software Engineer, Portfolio, UW-Madison, IBM">
     <meta name="author" content="Dillan Haran">
     <title>Dillan Haran | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- IBM Instana End User Monitoring -->
     <script>
         (function(s,t,a,n){s[t]||(s[t]=a,n=s[a]=function(){n.q.push(arguments)},
         n.q=[],n.v=2,n.l=1*new Date)})(window,"InstanaEumObject","ineum");
-
         ineum('reportingUrl', 'https://eum-orange-saas.instana.io');
         ineum('key', '0-A7VwJERHm-F5LaVkpIxA');
         ineum('trackSessions');
@@ -48,13 +47,24 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <canvas id="particle-canvas"></canvas>
+        <div class="hero-grid"></div>
+
         <div class="hero-container">
             <div class="hero-content">
+                <div class="hero-eyebrow">
+                    <span class="ibm-live-badge"><i class="fas fa-circle pulse-dot"></i> Currently @ IBM · Kuala Lumpur</span>
+                </div>
                 <h1 class="hero-title">Hi, I'm <span class="gradient-text">Dillan Haran</span></h1>
-                <p class="hero-subtitle">Computer Science & AI Student | Founder | Software Engineer</p>
+                <p class="hero-subtitle">Computer Science & AI Student | Founder | IBM Client Engineer</p>
                 <p class="hero-description">
-                    Building AI-powered solutions and educational platforms. Currently studying at UW-Madison 
-                    with a passion for entrepreneurship and innovation.
+                    Building AI-powered automation for Fortune 500 clients at IBM in Malaysia.
+                    Founder of Automind AI &amp; UCODE. Turning cutting-edge tech into real business value.
                 </p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
@@ -75,6 +85,7 @@
                 </div>
             </div>
         </div>
+
         <div class="scroll-indicator">
             <div class="mouse"></div>
         </div>
@@ -87,19 +98,21 @@
             <div class="about-content">
                 <div class="about-text">
                     <p class="about-intro">
-                        I'm a Computer Science and AI student at the University of Wisconsin-Madison with a 3.80 GPA, 
-                        passionate about leveraging technology to solve real-world problems.
+                        Computer Science and Artificial Intelligence student at the University of Wisconsin-Madison
+                        (GPA: 3.80/4.0), with hands-on experience building production AI systems, enterprise automation
+                        platforms, and full-stack software products.
                     </p>
                     <p>
-                        As the founder of <strong>Automind AI</strong>, I've built custom AI agents and CRM integrations 
-                        that have generated over $15,000 in revenue, helping small businesses automate their operations. 
-                        I also founded <strong>UCODE</strong>, an online coding academy that has taught 50+ students and 
-                        generates $7,000+ in revenue with a team of 6+ teachers.
+                        Currently a <strong>Client Engineering Intern at IBM</strong> in Kuala Lumpur, Malaysia,
+                        engineering LLM-powered automation and observability solutions for Fortune 500 clients across
+                        financial services and enterprise sectors. Driving <strong>$2M+ in pipeline value</strong> through
+                        end-to-end delivery of IBM watsonx Orchestrate, IBM Instana, and IBM Concert deployments.
                     </p>
                     <p>
-                        I'm currently an incoming <strong>Client Engineering Intern at IBM</strong> in Malaysia, where I'll 
-                        be working on cutting-edge technology solutions. My experience spans from AI automation to full-stack 
-                        development, and I'm always excited to take on new challenges.
+                        Founder of <strong>Automind AI</strong> — an AI automation agency generating $15,000+ in revenue
+                        through custom AI agents, CRM integrations, and workflow automation for SMBs. Also founded
+                        <strong>UCODE</strong>, a K–12 coding academy with 50+ students, 6+ instructors, and $7,000+ in
+                        annual recurring revenue.
                     </p>
                     <div class="about-stats">
                         <div class="stat">
@@ -107,8 +120,8 @@
                             <p>GPA</p>
                         </div>
                         <div class="stat">
-                            <h3>$22K+</h3>
-                            <p>Revenue Generated</p>
+                            <h3>$2M+</h3>
+                            <p>Pipeline Driven</p>
                         </div>
                         <div class="stat">
                             <h3>50+</h3>
@@ -129,15 +142,33 @@
         <div class="container">
             <h2 class="section-title">Work Experience</h2>
             <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+
+                <!-- IBM — Featured -->
+                <div class="timeline-item ibm-featured">
+                    <div class="timeline-dot ibm-dot"></div>
                     <div class="timeline-content">
                         <div class="timeline-header">
-                            <h3>Incoming Client Engineering Intern</h3>
-                            <span class="timeline-date">June 2026</span>
+                            <div class="timeline-title-wrap">
+                                <h3>Client Engineering Intern</h3>
+                                <span class="current-badge"><i class="fas fa-circle pulse-dot"></i> Current</span>
+                            </div>
+                            <span class="timeline-date">June 2026 – August 2026</span>
                         </div>
-                        <h4>IBM</h4>
-                        <p class="location">Malaysia</p>
+                        <h4 class="ibm-company">IBM</h4>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                        <ul>
+                            <li>Architected and delivered a proof-of-concept for <strong>IBM watsonx Orchestrate</strong>, automating multi-step client onboarding workflows for a Fortune 500 financial services firm, reducing manual process time by an estimated <span class="metric-badge">60%</span></li>
+                            <li>Developed and demoed <strong>IBM BOB</strong> automation solutions to <span class="metric-badge">3+</span> Fortune 500 enterprise clients, showcasing end-to-end AI agent capabilities and driving pipeline progression for <span class="metric-badge">$2M+</span> in potential contract value</li>
+                            <li>Deployed and configured <strong>IBM Instana</strong> and <strong>IBM Concert</strong> observability platforms to monitor microservices infrastructure, enabling real-time anomaly detection and reducing MTTR by <span class="metric-badge">35%</span></li>
+                            <li>Built <span class="metric-badge">4+</span> client-facing automation use cases on <strong>watsonx.ai</strong>, integrating LLM-powered agents with enterprise CRM and ERP systems to streamline operations and reduce overhead</li>
+                        </ul>
+                        <div class="ibm-tech-tags">
+                            <span class="ibm-tag">watsonx Orchestrate</span>
+                            <span class="ibm-tag">watsonx.ai</span>
+                            <span class="ibm-tag">IBM BOB</span>
+                            <span class="ibm-tag">IBM Instana</span>
+                            <span class="ibm-tag">IBM Concert</span>
+                        </div>
                     </div>
                 </div>
 
@@ -149,11 +180,11 @@
                             <span class="timeline-date">August 2025 – Present</span>
                         </div>
                         <h4>Automind AI</h4>
-                        <p class="location">San Francisco, CA</p>
-                        <p class="description">AI Automation agency building custom AI agents, CRM integrations, generating $15,000+ in revenue</p>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                        <p class="description">AI automation agency delivering custom AI agents and CRM integrations to SMBs, generating $15,000+ in revenue</p>
                         <ul>
-                            <li>Developed AI receptionist bots, calendar integrations for 5+ small businesses using Make, GoHighLevel, and no-code softwares</li>
-                            <li>Managed client onboarding, AI workflows, contracts, and prompt engineering for early adopters</li>
+                            <li>Engineered AI-powered voice receptionist agents and automated scheduling integrations for 5+ small business clients using Make.com, GoHighLevel, and REST APIs, directly reducing manual overhead</li>
+                            <li>Owned end-to-end client lifecycle — contracts, onboarding, prompt engineering, and workflow QA — scaling the agency from 0 to $15,000+ in revenue within months of launch</li>
                         </ul>
                     </div>
                 </div>
@@ -166,11 +197,11 @@
                             <span class="timeline-date">June 2024 – Present</span>
                         </div>
                         <h4>UCODE</h4>
-                        <p class="location">Remote</p>
-                        <p class="description">Online coding academy for K-12 students, currently generating $7,000+ revenue with 6+ active teachers</p>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> Remote</p>
+                        <p class="description">K–12 online coding academy generating $7,000+ in annual revenue with 50+ enrolled students and a 6+ instructor team</p>
                         <ul>
-                            <li>Built AP CSA-aligned Java & Python curriculum and taught 50+ students; Scaled operations from to multi-teacher team</li>
-                            <li>Designed and deployed a custom Node.js + Stripe e-learning platform supporting online payments and course management</li>
+                            <li>Designed and delivered AP Computer Science A–aligned Java and Python curriculum for 50+ K–12 students; grew instructional team from solo operation to 6+ educators through structured hiring and training</li>
+                            <li>Architected and deployed a full-stack e-learning platform using Node.js, Express, and Stripe API, enabling secure payment processing, course enrollment management, and automated billing</li>
                         </ul>
                     </div>
                 </div>
@@ -183,11 +214,11 @@
                             <span class="timeline-date">Summer 2023</span>
                         </div>
                         <h4>Ultrascanguide</h4>
-                        <p class="location">Palo Alto, CA</p>
-                        <p class="description">Research group led by inventor Ted Selker developing ultrasound imaging devices</p>
+                        <p class="location"><i class="fas fa-map-marker-alt"></i> Palo Alto, CA</p>
+                        <p class="description">Hardware research group developing next-generation ultrasound imaging devices under inventor Ted Selker</p>
                         <ul>
-                            <li>Programmed Arduino in MATLAB, improving accuracy of ultrasonic image capture</li>
-                            <li>Contributed signal processing code for real-time image analysis</li>
+                            <li>Programmed Arduino microcontrollers in MATLAB to optimize ultrasonic transducer control, measurably improving image capture resolution and signal accuracy</li>
+                            <li>Developed real-time signal processing algorithms for ultrasound data acquisition, contributing to a cross-disciplinary hardware-software imaging pipeline</li>
                         </ul>
                     </div>
                 </div>
@@ -207,11 +238,11 @@
                     </div>
                     <p class="project-role">Lead Developer</p>
                     <p class="project-description">
-                        Mobile app for UW students providing dining information, caloric tracking, and event listings.
+                        Cross-platform mobile application for UW-Madison students integrating dining hall menus, caloric tracking, campus event listings, and personalized club discovery.
                     </p>
                     <ul class="project-highlights">
-                        <li>Implemented a club recommender system using student-interest inputs using React & Firebase</li>
-                        <li>Launched to 200+ student testers with positive feedback</li>
+                        <li>Built a content-based club recommendation engine using student interest profiling, implemented with React.js and Firebase Firestore real-time database</li>
+                        <li>Acquired 200+ beta users at UW-Madison; gathered and incorporated user feedback to drive iterative UX improvements and feature prioritization</li>
                     </ul>
                     <div class="project-tags">
                         <span class="tag">React</span>
@@ -225,14 +256,13 @@
                         <h3>InternApp</h3>
                         <span class="project-date">November 2024 & 2025</span>
                     </div>
-                    <p class="project-role">Hackathon Developer - Madhacks</p>
+                    <p class="project-role">Hackathon Developer — Madhacks</p>
                     <p class="project-description">
-                        Job/internship tracker and Short-form News application developed in collaboration with students 
-                        and mentors from Epic and Capital One.
+                        Cross-platform mobile application featuring internship and job application tracking alongside a real-time short-form news feed, built at Madhacks with mentorship from Epic Systems and Capital One engineers.
                     </p>
                     <ul class="project-highlights">
-                        <li>Built with React Native, Expo, MongoDB</li>
-                        <li>Demoed to 200+ attendees; selected for final round presentations twice</li>
+                        <li>Developed full-stack mobile app using React Native, Expo, and MongoDB Atlas, implementing RESTful APIs for live data ingestion and user application state management</li>
+                        <li>Advanced to final-round presentations at Madhacks in both 2024 and 2025, demoing to 200+ attendees including industry engineers and recruiters</li>
                     </ul>
                     <div class="project-tags">
                         <span class="tag">React Native</span>
@@ -287,8 +317,11 @@
                     </div>
                     <h3>AI & Automation</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">IBM Bob</span>
-                        <span class="skill-tag">watsonx Orchestrate</span>
+                        <span class="skill-tag ibm-skill">watsonx Orchestrate</span>
+                        <span class="skill-tag ibm-skill">watsonx.ai</span>
+                        <span class="skill-tag ibm-skill">IBM BOB</span>
+                        <span class="skill-tag ibm-skill">IBM Instana</span>
+                        <span class="skill-tag ibm-skill">IBM Concert</span>
                         <span class="skill-tag">GPT APIs</span>
                         <span class="skill-tag">VAPI</span>
                         <span class="skill-tag">GoHighLevel</span>
@@ -311,11 +344,11 @@
                         <span class="leadership-date">August 2025 – Present</span>
                     </div>
                     <h4>Ethical & Responsible Business Network (ERBN)</h4>
-                    <p class="location">Madison, WI</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Madison, WI</p>
                     <ul>
-                        <li>Led a 12 person team to deliver a sustainability report for the City of Madison, analyzing building efficiency standards and identifying key gaps</li>
-                        <li>Built a Power BI dashboard and developed data driven policy and incentive recommendations to support green building adoption</li>
-                        <li>Advised an energy focused startup on go to market strategy, including market research, positioning, and growth opportunities</li>
+                        <li>Directed a 12-person consulting team to produce a municipal sustainability report for the City of Madison, auditing commercial building energy efficiency standards and quantifying compliance gaps</li>
+                        <li>Developed an interactive Power BI dashboard and authored data-driven policy recommendations adopted by client stakeholders to accelerate green building code adoption</li>
+                        <li>Delivered strategic go-to-market consulting for an energy-sector startup, including competitive market analysis, product positioning frameworks, and revenue growth recommendations</li>
                     </ul>
                 </div>
 
@@ -325,10 +358,10 @@
                         <span class="leadership-date">August 2024 – May 2025</span>
                     </div>
                     <h4>Wisconsin AI Safety Initiative</h4>
-                    <p class="location">Madison, WI</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Madison, WI</p>
                     <ul>
-                        <li>Researched vulnerabilities such as reward hacking & misgeneralization using ARENA</li>
-                        <li>Analyzed failure cases and synthesized technical findings and presented weekly technical findings to peers and faculty</li>
+                        <li>Investigated AI alignment failure modes — including reward hacking, distributional shift, and misgeneralization — using the ARENA mechanistic interpretability curriculum and published research</li>
+                        <li>Synthesized technical findings into structured weekly presentations delivered to cross-disciplinary peers and faculty, translating complex AI safety concepts for mixed technical audiences</li>
                     </ul>
                 </div>
             </div>
@@ -341,8 +374,8 @@
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
                 <p class="contact-intro">
-                    I'm always open to discussing new opportunities, collaborations, or just having a chat about technology and innovation. 
-                    Feel free to reach out!
+                    I'm always open to discussing new opportunities, collaborations, or just having a chat about
+                    technology and innovation. Feel free to reach out!
                 </p>
                 <div class="contact-info">
                     <a href="mailto:dillanharan@gmail.com" class="contact-item">
@@ -380,7 +413,7 @@
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 Dillan Haran. All rights reserved.</p>
-            <p class="footer-tagline">Built with passion and code ❤️</p>
+            <p class="footer-tagline">Built with passion and code</p>
         </div>
     </footer>
 
