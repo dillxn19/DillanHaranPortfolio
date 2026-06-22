@@ -1,280 +1,250 @@
-// ===== Mobile Navigation =====
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
+/* ============================================================
+   NAVBAR — scroll state + active section detection
+   ============================================================ */
+const navbar   = document.getElementById('navbar');
+const hamburger = document.getElementById('hamburger');
+const hamburgerIcon = document.getElementById('hamburger-icon');
+const mobileMenu = document.getElementById('mobileMenu');
 const navLinks = document.querySelectorAll('.nav-link');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    });
-});
-
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    }
-});
-
-// ===== Smooth Scrolling =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const navHeight = document.querySelector('.navbar').offsetHeight;
-            window.scrollTo({
-                top: target.offsetTop - navHeight,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// ===== Navbar on Scroll =====
-const navbar = document.querySelector('.navbar');
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
-// ===== Active Nav Link =====
 const sections = document.querySelectorAll('section[id]');
 
-function highlightNavigation() {
-    const scrollY = window.pageYOffset;
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 120;
-        const sectionId = section.getAttribute('id');
-        const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-        if (scrollY > sectionTop && scrollY <= sectionTop + section.offsetHeight) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            if (navLink) navLink.classList.add('active');
-        }
-    });
+let mobileOpen = false;
+
+hamburger.addEventListener('click', () => {
+  mobileOpen = !mobileOpen;
+  hamburger.setAttribute('aria-expanded', mobileOpen);
+  mobileMenu.classList.toggle('open', mobileOpen);
+  hamburgerIcon.className = mobileOpen ? 'fas fa-times' : 'fas fa-bars';
+  document.body.style.overflow = mobileOpen ? 'hidden' : '';
+});
+
+document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileOpen = false;
+    mobileMenu.classList.remove('open');
+    hamburgerIcon.className = 'fas fa-bars';
+    document.body.style.overflow = '';
+  });
+});
+
+function onScroll() {
+  // Navbar glassmorphism
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+
+  // Active nav link detection
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 150;
+    if (window.scrollY >= top) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    const isActive = link.dataset.section === current;
+    link.classList.toggle('active', isActive);
+  });
+
+  // Timeline scroll progress
+  updateTimelineProgress();
 }
 
-window.addEventListener('scroll', highlightNavigation);
+window.addEventListener('scroll', onScroll, { passive: true });
 
-// ===== Particle System =====
+// ============================================================
+//  SMOOTH SCROLLING
+// ============================================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    const offset = navbar.offsetHeight;
+    window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+  });
+});
+
+// ============================================================
+//  PARTICLE SYSTEM (hero only)
+// ============================================================
 (function initParticles() {
-    const canvas = document.getElementById('particle-canvas');
-    if (!canvas) return;
+  const canvas = document.getElementById('particle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [], animId = null;
 
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let animationId;
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = (Math.random() - 0.5) * 0.35;
+      this.opacity = Math.random() * 0.35 + 0.05;
+      const palettes = ['34,211,238','168,85,247','236,72,153'];
+      this.color = palettes[Math.floor(Math.random() * palettes.length)];
     }
-
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 1.8 + 0.3;
-            this.speedX = (Math.random() - 0.5) * 0.4;
-            this.speedY = (Math.random() - 0.5) * 0.4;
-            this.opacity = Math.random() * 0.4 + 0.05;
-            const hues = ['129, 140, 248', '244, 114, 182', '45, 212, 191'];
-            this.color = hues[Math.floor(Math.random() * hues.length)];
-        }
-
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            if (this.x < -5 || this.x > canvas.width + 5 ||
-                this.y < -5 || this.y > canvas.height + 5) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            ctx.save();
-            ctx.globalAlpha = this.opacity;
-            ctx.fillStyle = `rgba(${this.color}, 1)`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < -5 || this.x > canvas.width + 5 || this.y < -5 || this.y > canvas.height + 5) this.reset();
     }
-
-    function init() {
-        resize();
-        particles = Array.from({ length: 60 }, () => new Particle());
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle   = `rgba(${this.color},1)`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
     }
+  }
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        animationId = requestAnimationFrame(animate);
-    }
+  function init() {
+    resize();
+    particles = Array.from({ length: 70 }, () => new Particle());
+  }
 
-    window.addEventListener('resize', () => {
-        cancelAnimationFrame(animationId);
-        init();
-        animate();
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    animId = requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => { cancelAnimationFrame(animId); animId = null; init(); animate(); });
+
+  const heroObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { if (!animId) animate(); }
+      else { cancelAnimationFrame(animId); animId = null; }
     });
+  }, { threshold: 0 });
 
-    // Only run on the hero section, pause when scrolled away
-    const heroSection = document.getElementById('home');
-    const visibilityObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                if (!animationId) animate();
-            } else {
-                cancelAnimationFrame(animationId);
-                animationId = null;
-            }
-        });
-    }, { threshold: 0 });
+  const heroSection = document.getElementById('home');
+  if (heroSection) heroObs.observe(heroSection);
 
-    if (heroSection) visibilityObserver.observe(heroSection);
-
-    init();
-    animate();
+  init();
+  animate();
 })();
 
-// ===== Scroll Reveal with Stagger =====
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            revealObserver.unobserve(entry.target);
-        }
-    });
+// ============================================================
+//  SCROLL REVEAL — Intersection Observer
+// ============================================================
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const delay = parseFloat(el.dataset.delay || 0);
+    setTimeout(() => el.classList.add('visible'), delay * 1000);
+    revealObs.unobserve(el);
+  });
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-function setupReveal(selector, stagger = true) {
-    const els = document.querySelectorAll(selector);
-    els.forEach((el, i) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(28px)';
-        el.style.transition = `opacity 0.6s ease ${stagger ? i * 0.1 : 0}s, transform 0.6s ease ${stagger ? i * 0.1 : 0}s`;
-        revealObserver.observe(el);
-    });
+function registerReveal(selector, stagger = false) {
+  document.querySelectorAll(selector).forEach((el, i) => {
+    if (stagger) el.dataset.delay = (i * 0.1).toString();
+    revealObs.observe(el);
+  });
 }
 
-setupReveal('.timeline-item', true);
-setupReveal('.project-card', true);
-setupReveal('.skill-category', true);
-setupReveal('.leadership-card', true);
-setupReveal('.about-stats', false);
+registerReveal('.reveal-section', false);
+registerReveal('.reveal-tl', true);
+registerReveal('.reveal-project', true);
+registerReveal('.reveal-skill', true);
+registerReveal('.reveal-card', true);
 
-// ===== Timeline Dot Hover =====
-document.querySelectorAll('.timeline-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        const dot = item.querySelector('.timeline-dot');
-        if (dot) {
-            dot.style.transform = 'scale(1.5)';
-            dot.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-        }
+// ============================================================
+//  ANIMATED COUNTER
+// ============================================================
+function animateCounter(el, from, to, duration, prefix, suffix, decimals) {
+  const start = performance.now();
+  const fmt = val => {
+    const s = decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toString();
+    return `${prefix || ''}${s}${suffix || ''}`;
+  };
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmt(from + (to - from) * eased);
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(to);
+  }
+  requestAnimationFrame(tick);
+}
+
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('.stat-value').forEach(el => {
+      const from     = parseFloat(el.dataset.from || '0');
+      const to       = parseFloat(el.dataset.to   || '0');
+      const prefix   = el.dataset.prefix  || '';
+      const suffix   = el.dataset.suffix  != null ? el.dataset.suffix : '';
+      const decimals = el.dataset.decimals != null ? parseInt(el.dataset.decimals) : (to % 1 !== 0 ? 2 : 0);
+      animateCounter(el, from, to, 2000, prefix, suffix, decimals);
     });
-    item.addEventListener('mouseleave', () => {
-        const dot = item.querySelector('.timeline-dot');
-        if (dot) dot.style.transform = 'scale(1)';
-    });
+    statsObs.unobserve(entry.target);
+  });
+}, { threshold: 0.4 });
+
+const statsShell = document.querySelector('.stats-shell');
+if (statsShell) statsObs.observe(statsShell);
+
+// ============================================================
+//  TIMELINE PROGRESS LINE
+// ============================================================
+const timelineEl  = document.getElementById('timeline');
+const progressBar = document.getElementById('timelineProgress');
+
+function updateTimelineProgress() {
+  if (!timelineEl || !progressBar) return;
+  const rect   = timelineEl.getBoundingClientRect();
+  const vh     = window.innerHeight;
+  const total  = rect.height;
+  const seen   = Math.max(0, Math.min(total, vh * 0.65 - rect.top));
+  const pct    = Math.min(100, (seen / total) * 100);
+  progressBar.style.height = pct + '%';
+}
+
+// ============================================================
+//  RIPPLE EFFECT
+// ============================================================
+document.querySelectorAll('.btn-primary-hero, .btn-ghost-hero, .nav-cta, .mobile-cta').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    r.style.cssText = `
+      position:absolute;border-radius:50%;pointer-events:none;
+      width:${size}px;height:${size}px;
+      left:${e.clientX - rect.left - size/2}px;
+      top:${e.clientY - rect.top - size/2}px;
+      background:rgba(255,255,255,0.25);
+      transform:scale(0);animation:ripple-anim 0.6s ease-out;
+    `;
+    this.style.position = 'relative';
+    this.style.overflow = 'hidden';
+    this.appendChild(r);
+    setTimeout(() => r.remove(), 600);
+  });
 });
 
-// ===== Typing Effect =====
-const subtitle = document.querySelector('.hero-subtitle');
-if (subtitle) {
-    const text = subtitle.textContent;
-    subtitle.textContent = '';
-    let i = 0;
-
-    function typeWriter() {
-        if (i < text.length) {
-            subtitle.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 42);
-        }
-    }
-
-    setTimeout(typeWriter, 700);
+if (!document.getElementById('ripple-style')) {
+  const s = document.createElement('style');
+  s.id = 'ripple-style';
+  s.textContent = '@keyframes ripple-anim{to{transform:scale(4);opacity:0}}';
+  document.head.appendChild(s);
 }
 
-// ===== Counter Animation for Stats =====
-const statsSection = document.querySelector('.about-stats');
-
-function animateValue(el, from, to, duration, prefix, suffix) {
-    const start = performance.now();
-    function tick(now) {
-        const elapsed = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - elapsed, 3);
-        const current = from + (to - from) * eased;
-        el.textContent = prefix + (Number.isInteger(to) ? Math.floor(current) : current.toFixed(2)) + suffix;
-        if (elapsed < 1) requestAnimationFrame(tick);
-        else el.textContent = prefix + to + suffix;
-    }
-    requestAnimationFrame(tick);
-}
-
-if (statsSection) {
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                document.querySelectorAll('.stat h3').forEach(stat => {
-                    const raw = stat.textContent.trim();
-                    if (raw.startsWith('$') && raw.includes('M')) {
-                        const val = parseFloat(raw.replace(/[$M+]/g, ''));
-                        animateValue(stat, 0, val, 1800, '$', 'M+');
-                    } else if (raw.startsWith('$') && raw.includes('K')) {
-                        const val = parseFloat(raw.replace(/[$K+]/g, ''));
-                        animateValue(stat, 0, val, 1800, '$', 'K+');
-                    } else if (raw.includes('.')) {
-                        animateValue(stat, 0, parseFloat(raw), 1800, '', '');
-                    } else {
-                        const val = parseInt(raw.replace(/\+/g, ''));
-                        animateValue(stat, 0, val, 1800, '', '+');
-                    }
-                });
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    statsObserver.observe(statsSection);
-}
-
-// ===== Ripple Effect =====
-document.querySelectorAll('.btn, .social-btn').forEach(button => {
-    button.addEventListener('click', function (e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-        ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-        ripple.classList.add('ripple');
-        this.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
-    });
-});
-
-// ===== Init =====
+// ============================================================
+//  INIT
+// ============================================================
 window.addEventListener('load', () => {
-    highlightNavigation();
-    document.body.classList.add('loaded');
+  onScroll();
+  updateTimelineProgress();
 });
 
-console.log('%c Dillan Haran — Portfolio', 'color: #818cf8; font-size: 18px; font-weight: bold;');
-console.log('%c IBM Client Engineering Intern · AI Builder · Founder', 'color: #4589ff; font-size: 13px;');
+console.log('%c Dillan Haran — Portfolio', 'color:#22d3ee;font-size:18px;font-weight:bold;');
+console.log('%c IBM Client Engineer · AI Builder · Founder', 'color:#a855f7;font-size:13px;');

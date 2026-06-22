@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Dillan Haran - CS & AI Student at UW-Madison. IBM Client Engineering Intern in Kuala Lumpur. Founder of Automind AI and UCODE.">
-    <meta name="keywords" content="Dillan Haran, Computer Science, AI, Software Engineer, Portfolio, UW-Madison, IBM">
-    <meta name="author" content="Dillan Haran">
     <title>Dillan Haran | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- IBM Instana End User Monitoring -->
@@ -25,395 +23,851 @@
         integrity="sha384-qFzHZ5BC7HOPEBSYkbYSv+DBWrG34P1QW9mIaCR41db6yOJNYmH4antW6KLkc6v1"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">DH</a>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#leadership" class="nav-link">Leadership</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+
+    <!-- Noise overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <nav class="nav-inner">
+            <a href="#home" class="nav-logo" aria-label="Dillan Haran">
+                <span class="nav-logo-badge">DH</span>
+                <span class="nav-logo-name">Dillan Haran</span>
+            </a>
+
+            <ul class="nav-pill" id="navMenu">
+                <li><a href="#about"      class="nav-link" data-section="about">About</a></li>
+                <li><a href="#experience" class="nav-link" data-section="experience">Experience</a></li>
+                <li><a href="#projects"   class="nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#skills"     class="nav-link" data-section="skills">Skills</a></li>
+                <li><a href="#leadership" class="nav-link" data-section="leadership">Leadership</a></li>
             </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
+            <a href="resume.pdf" class="nav-resume" target="_blank" rel="noreferrer">
+                <i class="fas fa-file-alt"></i> Resume
+            </a>
+
+            <a href="#contact" class="nav-cta">Get in touch</a>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fas fa-bars" id="hamburger-icon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile menu overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about"      class="mobile-link"><span class="mono-num">01</span>About</a></li>
+            <li><a href="#experience" class="mobile-link"><span class="mono-num">02</span>Experience</a></li>
+            <li><a href="#projects"   class="mobile-link"><span class="mono-num">03</span>Projects</a></li>
+            <li><a href="#skills"     class="mobile-link"><span class="mono-num">04</span>Skills</a></li>
+            <li><a href="#leadership" class="mobile-link"><span class="mono-num">05</span>Leadership</a></li>
+            <li><a href="#contact" class="mobile-cta">Get in touch →</a></li>
+            <li><a href="resume.pdf" class="mobile-resume" target="_blank" rel="noreferrer"><i class="fas fa-file-alt"></i> Resume</a></li>
+        </ul>
+    </div>
+
+    <main>
+
+    <!-- ===== HERO ===== -->
     <section id="home" class="hero">
-        <div class="hero-bg">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-        </div>
-        <canvas id="particle-canvas"></canvas>
-        <div class="hero-grid"></div>
+        <!-- Background layers -->
+        <div class="hero-grid-bg" aria-hidden="true"></div>
+        <div class="hero-radial-bg" aria-hidden="true"></div>
 
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-eyebrow">
-                    <span class="ibm-live-badge"><i class="fas fa-circle pulse-dot"></i> Currently @ IBM · Kuala Lumpur</span>
-                </div>
-                <h1 class="hero-title">Hi, I'm <span class="gradient-text">Dillan Haran</span></h1>
-                <p class="hero-subtitle">Computer Science & AI Student | Founder | IBM Client Engineer</p>
-                <p class="hero-description">
+        <!-- Orbs -->
+        <div class="hero-orbs" aria-hidden="true">
+            <div class="orb orb-cyan"></div>
+            <div class="orb orb-violet"></div>
+            <div class="orb orb-magenta"></div>
+        </div>
+
+        <!-- Particles -->
+        <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+        <!-- Vignette -->
+        <div class="hero-vignette" aria-hidden="true"></div>
+
+        <div class="hero-content">
+            <!-- Status badge -->
+            <div class="hero-badge reveal-hero" style="--delay:0.1s">
+                <span class="badge-dot">
+                    <span class="badge-ping"></span>
+                </span>
+                <span class="badge-text">
+                    Currently @ <strong>IBM</strong>
+                    <span class="badge-sep">·</span>
+                    <span class="badge-loc"><i class="fas fa-map-marker-alt"></i> Kuala Lumpur</span>
+                </span>
+            </div>
+
+            <!-- Greeting tag -->
+            <p class="hero-tag reveal-hero" style="--delay:0.2s">
+                <span class="tag-bracket">&lt;</span>hello world<span class="tag-bracket">/&gt;</span>
+            </p>
+
+            <!-- Title -->
+            <h1 class="hero-title reveal-hero" style="--delay:0.3s">
+                Hi, I'm<br>
+                <span class="text-aurora">Dillan Haran</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <div class="hero-sub reveal-hero" style="--delay:0.5s">
+                <p class="hero-roles">CS &amp; AI Engineer · Founder · <span class="text-cyan">IBM Client Engineer</span></p>
+                <p class="hero-desc">
                     Building AI-powered automation for Fortune 500 clients at IBM in Malaysia.
-                    Founder of Automind AI &amp; UCODE. Turning cutting-edge tech into real business value.
+                    Founder of <strong>Automind AI</strong> &amp; <strong>UCODE</strong>. Turning cutting-edge tech into real business value.
                 </p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="Resume(Jun 2026) - Google Docs.pdf" target="_blank" class="btn btn-secondary">
-                        <i class="fas fa-file-pdf"></i> View Resume
-                    </a>
-                </div>
-                <div class="hero-social">
-                    <a href="https://www.linkedin.com/in/dillanharan" target="_blank" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://www.instagram.com/dillxn_19" target="_blank" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="mailto:dillanharan@gmail.com" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="hero-ctas reveal-hero" style="--delay:0.7s">
+                <a href="#contact" class="btn-primary-hero">
+                    Get In Touch
+                    <i class="fas fa-arrow-right btn-arrow"></i>
+                </a>
+                <a href="#projects" class="btn-ghost-hero">
+                    <i class="fas fa-layer-group"></i> View Work
+                </a>
+            </div>
+
+            <!-- Socials -->
+            <div class="hero-socials reveal-hero" style="--delay:0.85s">
+                <a href="https://www.linkedin.com/in/dillanharan" target="_blank" rel="noreferrer" aria-label="LinkedIn" class="social-icon social-linkedin">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/dillxn_19" target="_blank" rel="noreferrer" aria-label="Instagram" class="social-icon social-instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:dillanharan@gmail.com" aria-label="Email" class="social-icon social-email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <div class="social-line"></div>
+                <span class="social-year">2026</span>
             </div>
         </div>
 
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
+        <!-- Scroll indicator -->
+        <div class="scroll-hint">
+            <div class="scroll-mouse">
+                <span class="scroll-wheel"></span>
+            </div>
+            <span class="scroll-label">Scroll</span>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="section-base">
+        <div class="section-bg-dots" aria-hidden="true"></div>
+        <div class="section-radial" style="background: radial-gradient(ellipse 50% 30% at 70% 30%, rgba(34,211,238,0.08), transparent 70%);" aria-hidden="true"></div>
+
         <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-intro">
-                        Computer Science and Artificial Intelligence student at the University of Wisconsin-Madison
-                        (GPA: 3.80/4.0), with hands-on experience building production AI systems, enterprise automation
-                        platforms, and full-stack software products.
+            <div class="section-header reveal-section">
+                <div class="section-eyebrow">
+                    <span class="section-index">01</span>
+                    <span class="section-line"></span>
+                    <span class="section-label">About</span>
+                </div>
+                <h2 class="section-title">
+                    Engineering <span class="text-cyan">production AI</span> &amp; shipping real products.
+                </h2>
+            </div>
+
+            <div class="about-grid">
+                <!-- Left: Narrative -->
+                <div class="about-narrative reveal-section">
+                    <p class="about-lead">
+                        Computer Science and Artificial Intelligence student at the
+                        <strong class="text-white">University of Wisconsin–Madison</strong>
+                        (GPA: 3.80/4.0), with hands-on experience building production AI systems,
+                        enterprise automation platforms, and full-stack software products.
                     </p>
-                    <p>
-                        Currently a <strong>Client Engineering Intern at IBM</strong> in Kuala Lumpur, Malaysia,
-                        engineering LLM-powered automation and observability solutions for Fortune 500 clients across
-                        financial services and enterprise sectors. Driving <strong>$2M+ in pipeline value</strong> through
-                        end-to-end delivery of IBM watsonx Orchestrate, IBM Instana, and IBM Concert deployments.
+                    <p class="about-body">
+                        Currently a <strong class="text-white">Client Engineering Intern at IBM</strong> in Kuala Lumpur, Malaysia,
+                        engineering LLM-powered automation and observability solutions for Fortune 500 clients.
+                        Driving <span class="text-cyan font-semibold">$2M+ in pipeline value</span> through
+                        end-to-end delivery of IBM watsonx Orchestrate, IBM Instana, and IBM Concert.
                     </p>
-                    <p>
-                        Founder of <strong>Automind AI</strong> — an AI automation agency generating $15,000+ in revenue
+                    <p class="about-body">
+                        Founder of <span class="text-violet">Automind AI</span> — an AI automation agency generating $15,000+ in revenue
                         through custom AI agents, CRM integrations, and workflow automation for SMBs. Also founded
-                        <strong>UCODE</strong>, a K–12 coding academy with 50+ students, 6+ instructors, and $7,000+ in
-                        annual recurring revenue.
+                        <span class="text-amber">UCODE</span>, a K–12 coding academy with 50+ students, 6+ instructors, and $7,000+ ARR.
                     </p>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <h3>3.80</h3>
-                            <p>GPA</p>
-                        </div>
-                        <div class="stat">
-                            <h3>$2M+</h3>
-                            <p>Pipeline Driven</p>
-                        </div>
-                        <div class="stat">
-                            <h3>50+</h3>
-                            <p>Students Taught</p>
-                        </div>
-                        <div class="stat">
-                            <h3>200+</h3>
-                            <p>App Users</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Work Experience</h2>
-            <div class="timeline">
-
-                <!-- IBM — Featured -->
-                <div class="timeline-item ibm-featured">
-                    <div class="timeline-dot ibm-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <div class="timeline-title-wrap">
-                                <h3>Client Engineering Intern</h3>
-                                <span class="current-badge"><i class="fas fa-circle pulse-dot"></i> Current</span>
+                    <!-- Identity cards -->
+                    <div class="identity-grid">
+                        <div class="identity-card id-cyan reveal-card">
+                            <span class="id-icon ic-cyan"><i class="fas fa-graduation-cap"></i></span>
+                            <div>
+                                <p class="id-title">UW–Madison</p>
+                                <p class="id-sub">CS &amp; AI · GPA 3.80</p>
                             </div>
-                            <span class="timeline-date">June 2026 – August 2026</span>
                         </div>
-                        <h4 class="ibm-company">IBM</h4>
-                        <p class="location"><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
-                        <ul>
-                            <li>Architected and delivered a proof-of-concept for <strong>IBM watsonx Orchestrate</strong>, automating multi-step client onboarding workflows for a Fortune 500 financial services firm, reducing manual process time by an estimated <span class="metric-badge">60%</span></li>
-                            <li>Developed and demoed <strong>IBM BOB</strong> automation solutions to <span class="metric-badge">3+</span> Fortune 500 enterprise clients, showcasing end-to-end AI agent capabilities and driving pipeline progression for <span class="metric-badge">$2M+</span> in potential contract value</li>
-                            <li>Deployed and configured <strong>IBM Instana</strong> and <strong>IBM Concert</strong> observability platforms to monitor microservices infrastructure, enabling real-time anomaly detection and reducing MTTR by <span class="metric-badge">35%</span></li>
-                            <li>Built <span class="metric-badge">4+</span> client-facing automation use cases on <strong>watsonx.ai</strong>, integrating LLM-powered agents with enterprise CRM and ERP systems to streamline operations and reduce overhead</li>
-                        </ul>
-                        <div class="ibm-tech-tags">
-                            <span class="ibm-tag">watsonx Orchestrate</span>
-                            <span class="ibm-tag">watsonx.ai</span>
-                            <span class="ibm-tag">IBM BOB</span>
-                            <span class="ibm-tag">IBM Instana</span>
-                            <span class="ibm-tag">IBM Concert</span>
+                        <div class="identity-card id-violet reveal-card">
+                            <span class="id-icon ic-violet"><i class="fas fa-building"></i></span>
+                            <div>
+                                <p class="id-title">IBM</p>
+                                <p class="id-sub">Client Engineer · KL</p>
+                            </div>
+                        </div>
+                        <div class="identity-card id-magenta reveal-card">
+                            <span class="id-icon ic-magenta"><i class="fas fa-rocket"></i></span>
+                            <div>
+                                <p class="id-title">Automind AI</p>
+                                <p class="id-sub">Founder · $15K+ rev</p>
+                            </div>
+                        </div>
+                        <div class="identity-card id-amber reveal-card">
+                            <span class="id-icon ic-amber"><i class="fas fa-users"></i></span>
+                            <div>
+                                <p class="id-title">UCODE</p>
+                                <p class="id-sub">Founder · 50+ students</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Founder / Engineer</h3>
-                            <span class="timeline-date">August 2025 – Present</span>
+                <!-- Right: Sticky stats -->
+                <div class="about-sidebar">
+                    <div class="sidebar-sticky">
+                        <!-- Stats grid -->
+                        <div class="stats-shell reveal-section">
+                            <div class="stats-grid">
+                                <div class="stat-card sc-cyan">
+                                    <div class="stat-glow sg-cyan"></div>
+                                    <p class="stat-value sv-cyan" data-from="0" data-to="3.80" data-decimals="2" data-suffix="">3.80</p>
+                                    <p class="stat-label">GPA</p>
+                                    <p class="stat-sub">UW–Madison · CS &amp; AI</p>
+                                </div>
+                                <div class="stat-card sc-violet">
+                                    <div class="stat-glow sg-violet"></div>
+                                    <p class="stat-value sv-violet" data-from="0" data-to="2" data-prefix="$" data-suffix="M+">$2M+</p>
+                                    <p class="stat-label">Pipeline Driven</p>
+                                    <p class="stat-sub">IBM enterprise clients</p>
+                                </div>
+                                <div class="stat-card sc-magenta">
+                                    <div class="stat-glow sg-magenta"></div>
+                                    <p class="stat-value sv-magenta" data-from="0" data-to="50" data-suffix="+">50+</p>
+                                    <p class="stat-label">Students Taught</p>
+                                    <p class="stat-sub">UCODE K–12 academy</p>
+                                </div>
+                                <div class="stat-card sc-amber">
+                                    <div class="stat-glow sg-amber"></div>
+                                    <p class="stat-value sv-amber" data-from="0" data-to="200" data-suffix="+">200+</p>
+                                    <p class="stat-label">App Users</p>
+                                    <p class="stat-sub">BadgerApp beta</p>
+                                </div>
+                            </div>
                         </div>
-                        <h4>Automind AI</h4>
-                        <p class="location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
-                        <p class="description">AI automation agency delivering custom AI agents and CRM integrations to SMBs, generating $15,000+ in revenue</p>
-                        <ul>
-                            <li>Engineered AI-powered voice receptionist agents and automated scheduling integrations for 5+ small business clients using Make.com, GoHighLevel, and REST APIs, directly reducing manual overhead</li>
-                            <li>Owned end-to-end client lifecycle — contracts, onboarding, prompt engineering, and workflow QA — scaling the agency from 0 to $15,000+ in revenue within months of launch</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Founder / Instructor</h3>
-                            <span class="timeline-date">June 2024 – Present</span>
+                        <!-- Snapshot -->
+                        <div class="snapshot-card reveal-section">
+                            <p class="snapshot-heading">Snapshot</p>
+                            <div class="snapshot-rows">
+                                <div class="snapshot-row">
+                                    <span class="sr-key">Based in</span>
+                                    <span class="sr-val">San Francisco, CA</span>
+                                </div>
+                                <div class="snapshot-row">
+                                    <span class="sr-key">School</span>
+                                    <span class="sr-val">UW–Madison</span>
+                                </div>
+                                <div class="snapshot-row">
+                                    <span class="sr-key">Now</span>
+                                    <span class="sr-val">IBM · Kuala Lumpur</span>
+                                </div>
+                                <div class="snapshot-row">
+                                    <span class="sr-key">Focus</span>
+                                    <span class="sr-val">LLM Automation · AI Agents</span>
+                                </div>
+                            </div>
                         </div>
-                        <h4>UCODE</h4>
-                        <p class="location"><i class="fas fa-map-marker-alt"></i> Remote</p>
-                        <p class="description">K–12 online coding academy generating $7,000+ in annual revenue with 50+ enrolled students and a 6+ instructor team</p>
-                        <ul>
-                            <li>Designed and delivered AP Computer Science A–aligned Java and Python curriculum for 50+ K–12 students; grew instructional team from solo operation to 6+ educators through structured hiring and training</li>
-                            <li>Architected and deployed a full-stack e-learning platform using Node.js, Express, and Stripe API, enabling secure payment processing, course enrollment management, and automated billing</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Software Engineering Intern</h3>
-                            <span class="timeline-date">Summer 2023</span>
-                        </div>
-                        <h4>Ultrascanguide</h4>
-                        <p class="location"><i class="fas fa-map-marker-alt"></i> Palo Alto, CA</p>
-                        <p class="description">Hardware research group developing next-generation ultrasound imaging devices under inventor Ted Selker</p>
-                        <ul>
-                            <li>Programmed Arduino microcontrollers in MATLAB to optimize ultrasonic transducer control, measurably improving image capture resolution and signal accuracy</li>
-                            <li>Developed real-time signal processing algorithms for ultrasound data acquisition, contributing to a cross-disciplinary hardware-software imaging pipeline</li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience" class="section-base">
+        <div class="section-radial" style="background: radial-gradient(ellipse 60% 40% at 20% 50%, rgba(168,85,247,0.10), transparent 70%), radial-gradient(ellipse 50% 40% at 90% 30%, rgba(34,211,238,0.06), transparent 70%);" aria-hidden="true"></div>
+
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
+            <div class="section-header reveal-section">
+                <div class="section-eyebrow">
+                    <span class="section-index">02</span>
+                    <span class="section-line"></span>
+                    <span class="section-label">Experience</span>
+                </div>
+                <h2 class="section-title">
+                    Where I've <span class="text-aurora">shipped &amp; led.</span>
+                </h2>
+            </div>
+
+            <div class="timeline" id="timeline">
+                <!-- Track -->
+                <div class="timeline-track" aria-hidden="true"></div>
+                <div class="timeline-progress" id="timelineProgress" aria-hidden="true"></div>
+
+                <!-- IBM -->
+                <article class="timeline-item tl-featured reveal-tl" data-accent="cyan">
+                    <div class="tl-node tl-node-featured">
+                        <span class="tl-ping"></span>
+                    </div>
+
+                    <div class="tl-card tl-card-featured">
+                        <div class="tl-ribbon"><i class="fas fa-sparkles"></i> Featured</div>
+
+                        <div class="tl-header">
+                            <div class="tl-title-block">
+                                <h3 class="tl-role">Client Engineering Intern</h3>
+                                <p class="tl-company text-cyan">IBM</p>
+                            </div>
+                            <div class="tl-meta">
+                                <span class="tl-period">June 2026 – August 2026</span>
+                                <span class="tl-active"><span class="tl-active-dot"></span>Active</span>
+                            </div>
+                        </div>
+                        <p class="tl-location"><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                        <p class="tl-summary">Engineering LLM-powered automation and observability solutions for Fortune 500 clients across financial services and enterprise sectors.</p>
+
+                        <ul class="tl-list">
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                                <span>Architected and delivered a proof-of-concept for <strong>IBM watsonx Orchestrate</strong>, automating multi-step client onboarding workflows for a Fortune 500 financial services firm, reducing manual process time by an estimated <span class="metric-chip mc-cyan">60%</span></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                                <span>Developed and demoed <strong>IBM BOB</strong> automation solutions to <span class="metric-chip mc-cyan">3+</span> Fortune 500 enterprise clients, driving pipeline progression for <span class="metric-chip mc-cyan">$2M+</span> in potential contract value</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                                <span>Deployed and configured <strong>IBM Instana</strong> and <strong>IBM Concert</strong> observability platforms, enabling real-time anomaly detection and reducing MTTR by <span class="metric-chip mc-cyan">35%</span></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                                <span>Built <span class="metric-chip mc-cyan">4+</span> client-facing automation use cases on <strong>watsonx.ai</strong>, integrating LLM-powered agents with enterprise CRM and ERP systems</span>
+                            </li>
+                        </ul>
+
+                        <div class="tl-stack">
+                            <span class="stack-tag">watsonx Orchestrate</span>
+                            <span class="stack-tag">watsonx.ai</span>
+                            <span class="stack-tag">IBM BOB</span>
+                            <span class="stack-tag">IBM Instana</span>
+                            <span class="stack-tag">IBM Concert</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Automind -->
+                <article class="timeline-item reveal-tl" data-accent="magenta">
+                    <div class="tl-node tl-node-magenta"></div>
+                    <div class="tl-card">
+                        <div class="tl-header">
+                            <div class="tl-title-block">
+                                <h3 class="tl-role">Founder / Engineer</h3>
+                                <p class="tl-company text-magenta">Automind AI</p>
+                            </div>
+                            <div class="tl-meta">
+                                <span class="tl-period">August 2025 – Present</span>
+                            </div>
+                        </div>
+                        <p class="tl-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                        <p class="tl-summary">AI automation agency delivering custom AI agents and CRM integrations to SMBs, generating $15,000+ in revenue.</p>
+
+                        <ul class="tl-list">
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-magenta"></i>
+                                <span>Engineered AI-powered voice receptionist agents and automated scheduling integrations for 5+ small business clients using Make.com, GoHighLevel, and REST APIs</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-magenta"></i>
+                                <span>Owned end-to-end client lifecycle — contracts, onboarding, prompt engineering, and workflow QA — scaling the agency from 0 to <span class="metric-chip mc-magenta">$15,000+</span> in revenue within months of launch</span>
+                            </li>
+                        </ul>
+
+                        <div class="tl-stack">
+                            <span class="stack-tag">Make.com</span>
+                            <span class="stack-tag">GoHighLevel</span>
+                            <span class="stack-tag">VAPI</span>
+                            <span class="stack-tag">GPT APIs</span>
+                            <span class="stack-tag">REST APIs</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- UCODE -->
+                <article class="timeline-item reveal-tl" data-accent="amber">
+                    <div class="tl-node tl-node-amber"></div>
+                    <div class="tl-card">
+                        <div class="tl-header">
+                            <div class="tl-title-block">
+                                <h3 class="tl-role">Founder / Instructor</h3>
+                                <p class="tl-company text-amber">UCODE</p>
+                            </div>
+                            <div class="tl-meta">
+                                <span class="tl-period">June 2024 – Present</span>
+                            </div>
+                        </div>
+                        <p class="tl-location"><i class="fas fa-map-marker-alt"></i> Remote</p>
+                        <p class="tl-summary">K–12 online coding academy generating $7,000+ in annual revenue with 50+ enrolled students and a 6+ instructor team.</p>
+
+                        <ul class="tl-list">
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-amber"></i>
+                                <span>Designed and delivered AP CS A–aligned Java and Python curriculum for 50+ K–12 students; grew instructional team from solo to 6+ educators through structured hiring and training</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-amber"></i>
+                                <span>Architected and deployed a full-stack e-learning platform using Node.js, Express, and Stripe API enabling secure payment processing and automated billing</span>
+                            </li>
+                        </ul>
+
+                        <div class="tl-stack">
+                            <span class="stack-tag">Node.js</span>
+                            <span class="stack-tag">Express</span>
+                            <span class="stack-tag">Stripe API</span>
+                            <span class="stack-tag">Java</span>
+                            <span class="stack-tag">Python</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Ultrascanguide -->
+                <article class="timeline-item reveal-tl" data-accent="emerald">
+                    <div class="tl-node tl-node-emerald"></div>
+                    <div class="tl-card">
+                        <div class="tl-header">
+                            <div class="tl-title-block">
+                                <h3 class="tl-role">Software Engineering Intern</h3>
+                                <p class="tl-company text-emerald">Ultrascanguide</p>
+                            </div>
+                            <div class="tl-meta">
+                                <span class="tl-period">Summer 2023</span>
+                            </div>
+                        </div>
+                        <p class="tl-location"><i class="fas fa-map-marker-alt"></i> Palo Alto, CA</p>
+                        <p class="tl-summary">Hardware research group developing next-generation ultrasound imaging devices under inventor Ted Selker.</p>
+
+                        <ul class="tl-list">
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-emerald"></i>
+                                <span>Programmed Arduino microcontrollers in MATLAB to optimize ultrasonic transducer control, measurably improving image capture resolution and signal accuracy</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-chevron-right tl-chevron text-emerald"></i>
+                                <span>Developed real-time signal processing algorithms for ultrasound data acquisition, contributing to a cross-disciplinary hardware-software imaging pipeline</span>
+                            </li>
+                        </ul>
+
+                        <div class="tl-stack">
+                            <span class="stack-tag">Arduino</span>
+                            <span class="stack-tag">MATLAB</span>
+                            <span class="stack-tag">Signal Processing</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="section-base">
+        <div class="section-radial" style="background: radial-gradient(ellipse 50% 40% at 80% 70%, rgba(245,158,11,0.08), transparent 70%), radial-gradient(ellipse 50% 40% at 20% 30%, rgba(34,211,238,0.06), transparent 70%);" aria-hidden="true"></div>
+
+        <div class="container">
+            <div class="section-header reveal-section">
+                <div class="section-eyebrow">
+                    <span class="section-index">03</span>
+                    <span class="section-line"></span>
+                    <span class="section-label">Featured Projects</span>
+                </div>
+                <h2 class="section-title">
+                    Things I've <span class="text-ember">built &amp; shipped.</span>
+                </h2>
+            </div>
+
             <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>BadgerApp</h3>
-                        <span class="project-date">March 2025 – Present</span>
-                    </div>
-                    <p class="project-role">Lead Developer</p>
-                    <p class="project-description">
-                        Cross-platform mobile application for UW-Madison students integrating dining hall menus, caloric tracking, campus event listings, and personalized club discovery.
-                    </p>
-                    <ul class="project-highlights">
-                        <li>Built a content-based club recommendation engine using student interest profiling, implemented with React.js and Firebase Firestore real-time database</li>
-                        <li>Acquired 200+ beta users at UW-Madison; gathered and incorporated user feedback to drive iterative UX improvements and feature prioritization</li>
-                    </ul>
-                    <div class="project-tags">
-                        <span class="tag">React</span>
-                        <span class="tag">Firebase</span>
-                        <span class="tag">Mobile</span>
-                    </div>
-                </div>
+                <!-- BadgerApp -->
+                <article class="project-card pc-cyan reveal-project">
+                    <div class="pc-glow pcg-cyan" aria-hidden="true"></div>
+                    <div class="pc-inner">
+                        <div class="pc-header">
+                            <div>
+                                <div class="pc-role-row">
+                                    <span class="pc-role rc-cyan"><i class="fas fa-layer-group"></i> Lead Developer</span>
+                                    <span class="pc-period">March 2025 – Present</span>
+                                </div>
+                                <h3 class="pc-name">BadgerApp</h3>
+                            </div>
+                            <div class="pc-arrow">
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </div>
 
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>InternApp</h3>
-                        <span class="project-date">November 2024 & 2025</span>
+                        <p class="pc-desc">
+                            Cross-platform mobile application for UW-Madison students integrating dining hall menus,
+                            caloric tracking, campus event listings, and personalized club discovery.
+                        </p>
+
+                        <ul class="pc-highlights">
+                            <li><i class="fas fa-check-circle ph-icon text-cyan"></i><span>Built a content-based club recommendation engine using student interest profiling, implemented with React.js and Firebase Firestore real-time database</span></li>
+                            <li><i class="fas fa-check-circle ph-icon text-cyan"></i><span>Acquired 200+ beta users at UW-Madison; gathered and incorporated user feedback to drive iterative UX improvements and feature prioritization</span></li>
+                        </ul>
+
+                        <div class="pc-metrics">
+                            <div class="pc-metric">
+                                <p class="pm-val text-cyan">200+</p>
+                                <p class="pm-label">Beta Users</p>
+                            </div>
+                            <div class="pc-metric">
+                                <p class="pm-val text-cyan">4+</p>
+                                <p class="pm-label">Features</p>
+                            </div>
+                        </div>
+
+                        <div class="pc-stack">
+                            <span class="stack-tag">React</span>
+                            <span class="stack-tag">Firebase</span>
+                            <span class="stack-tag">Expo</span>
+                            <span class="stack-tag">Mobile</span>
+                        </div>
                     </div>
-                    <p class="project-role">Hackathon Developer — Madhacks</p>
-                    <p class="project-description">
-                        Cross-platform mobile application featuring internship and job application tracking alongside a real-time short-form news feed, built at Madhacks with mentorship from Epic Systems and Capital One engineers.
-                    </p>
-                    <ul class="project-highlights">
-                        <li>Developed full-stack mobile app using React Native, Expo, and MongoDB Atlas, implementing RESTful APIs for live data ingestion and user application state management</li>
-                        <li>Advanced to final-round presentations at Madhacks in both 2024 and 2025, demoing to 200+ attendees including industry engineers and recruiters</li>
-                    </ul>
-                    <div class="project-tags">
-                        <span class="tag">React Native</span>
-                        <span class="tag">Expo</span>
-                        <span class="tag">MongoDB</span>
-                        <span class="tag">Hackathon</span>
+                </article>
+
+                <!-- InternApp -->
+                <article class="project-card pc-amber reveal-project">
+                    <div class="pc-glow pcg-amber" aria-hidden="true"></div>
+                    <div class="pc-inner">
+                        <div class="pc-header">
+                            <div>
+                                <div class="pc-role-row">
+                                    <span class="pc-role rc-amber"><i class="fas fa-layer-group"></i> Hackathon Dev</span>
+                                    <span class="pc-period">Nov 2024 &amp; 2025</span>
+                                </div>
+                                <h3 class="pc-name">InternApp</h3>
+                            </div>
+                            <div class="pc-arrow">
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </div>
+
+                        <p class="pc-desc">
+                            Cross-platform mobile app featuring internship and job application tracking alongside a
+                            real-time short-form news feed, built at Madhacks with mentorship from Epic Systems and Capital One.
+                        </p>
+
+                        <ul class="pc-highlights">
+                            <li><i class="fas fa-check-circle ph-icon text-amber"></i><span>Developed full-stack mobile app using React Native, Expo, and MongoDB Atlas, implementing RESTful APIs for live data ingestion and user state management</span></li>
+                            <li><i class="fas fa-check-circle ph-icon text-amber"></i><span>Advanced to final-round presentations at Madhacks in both 2024 and 2025, demoing to 200+ attendees including industry engineers and recruiters</span></li>
+                        </ul>
+
+                        <div class="pc-metrics">
+                            <div class="pc-metric">
+                                <p class="pm-val text-amber">2× Finals</p>
+                                <p class="pm-label">Madhacks</p>
+                            </div>
+                            <div class="pc-metric">
+                                <p class="pm-val text-amber">200+</p>
+                                <p class="pm-label">Demo Attendees</p>
+                            </div>
+                        </div>
+
+                        <div class="pc-stack">
+                            <span class="stack-tag">React Native</span>
+                            <span class="stack-tag">Expo</span>
+                            <span class="stack-tag">MongoDB</span>
+                            <span class="stack-tag">Hackathon</span>
+                        </div>
                     </div>
-                </div>
+                </article>
+            </div>
+
+            <div class="projects-cta reveal-section">
+                <span class="projects-cta-line"></span>
+                More on the way — currently shipping at IBM &amp; Automind AI
+                <span class="projects-cta-line"></span>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="section-base">
+        <div class="section-radial" style="background: radial-gradient(ellipse 60% 40% at 30% 30%, rgba(168,85,247,0.08), transparent 70%);" aria-hidden="true"></div>
+
         <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
+            <div class="section-header reveal-section">
+                <div class="section-eyebrow">
+                    <span class="section-index">04</span>
+                    <span class="section-line"></span>
+                    <span class="section-label">Skills</span>
+                </div>
+                <h2 class="section-title">
+                    The toolkit I <span class="text-emerald">build with.</span>
+                </h2>
+            </div>
+
             <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Languages</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">MATLAB</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <h3>Frameworks & Tools</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">React.js</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Selenium</span>
-                        <span class="skill-tag">Arduino</span>
-                        <span class="skill-tag">Crawl4AI</span>
+                <div class="skill-card sk-cyan reveal-skill">
+                    <div class="sk-corner-accent sca-cyan"></div>
+                    <div class="sk-glow skg-cyan" aria-hidden="true"></div>
+                    <div class="sk-icon sik-cyan"><i class="fas fa-code"></i></div>
+                    <h3 class="sk-title">Languages</h3>
+                    <div class="sk-tags">
+                        <span class="stack-tag">Java</span>
+                        <span class="stack-tag">Python</span>
+                        <span class="stack-tag">JavaScript</span>
+                        <span class="stack-tag">SQL</span>
+                        <span class="stack-tag">MATLAB</span>
+                        <span class="stack-tag">HTML/CSS</span>
                     </div>
                 </div>
 
-                <div class="skill-category">
-                    <div class="skill-icon">
-                        <i class="fas fa-robot"></i>
+                <div class="skill-card sk-violet reveal-skill">
+                    <div class="sk-corner-accent sca-violet"></div>
+                    <div class="sk-glow skg-violet" aria-hidden="true"></div>
+                    <div class="sk-icon sik-violet"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="sk-title">Frameworks &amp; Tools</h3>
+                    <div class="sk-tags">
+                        <span class="stack-tag">React.js</span>
+                        <span class="stack-tag">Node.js</span>
+                        <span class="stack-tag">Flask</span>
+                        <span class="stack-tag">MongoDB</span>
+                        <span class="stack-tag">Selenium</span>
+                        <span class="stack-tag">Arduino</span>
+                        <span class="stack-tag">Crawl4AI</span>
                     </div>
-                    <h3>AI & Automation</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag ibm-skill">watsonx Orchestrate</span>
-                        <span class="skill-tag ibm-skill">watsonx.ai</span>
-                        <span class="skill-tag ibm-skill">IBM BOB</span>
-                        <span class="skill-tag ibm-skill">IBM Instana</span>
-                        <span class="skill-tag ibm-skill">IBM Concert</span>
-                        <span class="skill-tag">GPT APIs</span>
-                        <span class="skill-tag">VAPI</span>
-                        <span class="skill-tag">GoHighLevel</span>
-                        <span class="skill-tag">Make</span>
-                        <span class="skill-tag">Stripe API</span>
+                </div>
+
+                <div class="skill-card sk-magenta reveal-skill">
+                    <div class="sk-corner-accent sca-magenta"></div>
+                    <div class="sk-glow skg-magenta" aria-hidden="true"></div>
+                    <div class="sk-icon sik-magenta"><i class="fas fa-robot"></i></div>
+                    <h3 class="sk-title">AI &amp; Automation</h3>
+                    <div class="ibm-badge-pill">IBM Stack</div>
+                    <div class="sk-tags">
+                        <span class="stack-tag ibm-tag">watsonx Orchestrate</span>
+                        <span class="stack-tag ibm-tag">watsonx.ai</span>
+                        <span class="stack-tag ibm-tag">IBM BOB</span>
+                        <span class="stack-tag ibm-tag">IBM Instana</span>
+                        <span class="stack-tag ibm-tag">IBM Concert</span>
+                        <span class="stack-tag">GPT APIs</span>
+                        <span class="stack-tag">VAPI</span>
+                        <span class="stack-tag">GoHighLevel</span>
+                        <span class="stack-tag">Make</span>
+                        <span class="stack-tag">Stripe API</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marquee -->
+            <div class="marquee-wrapper reveal-section">
+                <div class="marquee-fade-l" aria-hidden="true"></div>
+                <div class="marquee-fade-r" aria-hidden="true"></div>
+                <div class="marquee-track">
+                    <div class="marquee-inner" id="marqueeInner">
+                        <span>Java</span><span class="sep">/</span>
+                        <span>Python</span><span class="sep">/</span>
+                        <span>JavaScript</span><span class="sep">/</span>
+                        <span>SQL</span><span class="sep">/</span>
+                        <span>React.js</span><span class="sep">/</span>
+                        <span>Node.js</span><span class="sep">/</span>
+                        <span>MongoDB</span><span class="sep">/</span>
+                        <span>watsonx Orchestrate</span><span class="sep">/</span>
+                        <span>watsonx.ai</span><span class="sep">/</span>
+                        <span>IBM Instana</span><span class="sep">/</span>
+                        <span>IBM Concert</span><span class="sep">/</span>
+                        <span>GPT APIs</span><span class="sep">/</span>
+                        <span>VAPI</span><span class="sep">/</span>
+                        <span>Make.com</span><span class="sep">/</span>
+                        <span>GoHighLevel</span><span class="sep">/</span>
+                        <span>Stripe API</span><span class="sep">/</span>
+                        <span>Flask</span><span class="sep">/</span>
+                        <span>Selenium</span><span class="sep">/</span>
+                        <span>Firebase</span><span class="sep">/</span>
+                        <span>Arduino</span><span class="sep">/</span>
+                        <!-- duplicate for seamless loop -->
+                        <span>Java</span><span class="sep">/</span>
+                        <span>Python</span><span class="sep">/</span>
+                        <span>JavaScript</span><span class="sep">/</span>
+                        <span>SQL</span><span class="sep">/</span>
+                        <span>React.js</span><span class="sep">/</span>
+                        <span>Node.js</span><span class="sep">/</span>
+                        <span>MongoDB</span><span class="sep">/</span>
+                        <span>watsonx Orchestrate</span><span class="sep">/</span>
+                        <span>watsonx.ai</span><span class="sep">/</span>
+                        <span>IBM Instana</span><span class="sep">/</span>
+                        <span>IBM Concert</span><span class="sep">/</span>
+                        <span>GPT APIs</span><span class="sep">/</span>
+                        <span>VAPI</span><span class="sep">/</span>
+                        <span>Make.com</span><span class="sep">/</span>
+                        <span>GoHighLevel</span><span class="sep">/</span>
+                        <span>Stripe API</span><span class="sep">/</span>
+                        <span>Flask</span><span class="sep">/</span>
+                        <span>Selenium</span><span class="sep">/</span>
+                        <span>Firebase</span><span class="sep">/</span>
+                        <span>Arduino</span><span class="sep">/</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Leadership Section -->
-    <section id="leadership" class="leadership">
+    <!-- ===== LEADERSHIP ===== -->
+    <section id="leadership" class="section-base">
+        <div class="section-radial" style="background: radial-gradient(ellipse 50% 40% at 60% 40%, rgba(16,185,129,0.07), transparent 70%);" aria-hidden="true"></div>
+
         <div class="container">
-            <h2 class="section-title">Leadership & Activities</h2>
+            <div class="section-header reveal-section">
+                <div class="section-eyebrow">
+                    <span class="section-index">05</span>
+                    <span class="section-line"></span>
+                    <span class="section-label">Leadership</span>
+                </div>
+                <h2 class="section-title">
+                    Impact beyond <span class="text-emerald">the code.</span>
+                </h2>
+            </div>
+
             <div class="leadership-grid">
-                <div class="leadership-card">
-                    <div class="leadership-header">
-                        <h3>Consulting Team Lead</h3>
-                        <span class="leadership-date">August 2025 – Present</span>
+                <article class="leadership-card lc-cyan reveal-section">
+                    <div class="lc-header">
+                        <div>
+                            <h3 class="lc-role">Consulting Team Lead</h3>
+                            <h4 class="lc-org text-cyan">Ethical &amp; Responsible Business Network (ERBN)</h4>
+                        </div>
+                        <span class="lc-period">August 2025 – Present</span>
                     </div>
-                    <h4>Ethical & Responsible Business Network (ERBN)</h4>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> Madison, WI</p>
-                    <ul>
-                        <li>Directed a 12-person consulting team to produce a municipal sustainability report for the City of Madison, auditing commercial building energy efficiency standards and quantifying compliance gaps</li>
-                        <li>Developed an interactive Power BI dashboard and authored data-driven policy recommendations adopted by client stakeholders to accelerate green building code adoption</li>
-                        <li>Delivered strategic go-to-market consulting for an energy-sector startup, including competitive market analysis, product positioning frameworks, and revenue growth recommendations</li>
+                    <p class="tl-location"><i class="fas fa-map-marker-alt"></i> Madison, WI</p>
+                    <ul class="tl-list">
+                        <li>
+                            <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                            <span>Directed a 12-person consulting team to produce a municipal sustainability report for the City of Madison, auditing commercial building energy efficiency standards</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                            <span>Developed an interactive Power BI dashboard and authored data-driven policy recommendations adopted by client stakeholders to accelerate green building code adoption</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-chevron-right tl-chevron text-cyan"></i>
+                            <span>Delivered strategic go-to-market consulting for an energy-sector startup, including competitive market analysis, product positioning, and revenue growth recommendations</span>
+                        </li>
                     </ul>
-                </div>
+                </article>
 
-                <div class="leadership-card">
-                    <div class="leadership-header">
-                        <h3>Researcher</h3>
-                        <span class="leadership-date">August 2024 – May 2025</span>
+                <article class="leadership-card lc-violet reveal-section">
+                    <div class="lc-header">
+                        <div>
+                            <h3 class="lc-role">Researcher</h3>
+                            <h4 class="lc-org text-violet">Wisconsin AI Safety Initiative</h4>
+                        </div>
+                        <span class="lc-period">August 2024 – May 2025</span>
                     </div>
-                    <h4>Wisconsin AI Safety Initiative</h4>
-                    <p class="location"><i class="fas fa-map-marker-alt"></i> Madison, WI</p>
-                    <ul>
-                        <li>Investigated AI alignment failure modes — including reward hacking, distributional shift, and misgeneralization — using the ARENA mechanistic interpretability curriculum and published research</li>
-                        <li>Synthesized technical findings into structured weekly presentations delivered to cross-disciplinary peers and faculty, translating complex AI safety concepts for mixed technical audiences</li>
+                    <p class="tl-location"><i class="fas fa-map-marker-alt"></i> Madison, WI</p>
+                    <ul class="tl-list">
+                        <li>
+                            <i class="fas fa-chevron-right tl-chevron text-violet"></i>
+                            <span>Investigated AI alignment failure modes — including reward hacking, distributional shift, and misgeneralization — using the ARENA mechanistic interpretability curriculum and published research</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-chevron-right tl-chevron text-violet"></i>
+                            <span>Synthesized technical findings into structured weekly presentations delivered to cross-disciplinary peers and faculty, translating complex AI safety concepts for mixed technical audiences</span>
+                        </li>
                     </ul>
-                </div>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="section-base">
+        <div class="section-bg-dots" aria-hidden="true"></div>
+        <div class="section-radial" style="background: radial-gradient(ellipse 70% 50% at 50% 80%, rgba(34,211,238,0.12), transparent 70%), radial-gradient(ellipse 50% 40% at 10% 30%, rgba(168,85,247,0.10), transparent 70%);" aria-hidden="true"></div>
+
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <p class="contact-intro">
-                    I'm always open to discussing new opportunities, collaborations, or just having a chat about
-                    technology and innovation. Feel free to reach out!
-                </p>
-                <div class="contact-info">
-                    <a href="mailto:dillanharan@gmail.com" class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>dillanharan@gmail.com</span>
-                    </a>
-                    <a href="tel:+15109538999" class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <span>(510) 953-8999</span>
-                    </a>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>San Francisco, CA</span>
+            <div class="section-header reveal-section">
+                <div class="section-eyebrow">
+                    <span class="section-index">06</span>
+                    <span class="section-line"></span>
+                    <span class="section-label">Contact</span>
+                </div>
+                <h2 class="section-title">
+                    Let's build something <span class="text-aurora">extraordinary.</span>
+                </h2>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Big CTA card -->
+                <div class="contact-cta-card reveal-section">
+                    <div class="cta-glow" aria-hidden="true"></div>
+                    <div class="cta-inner">
+                        <p class="cta-eyebrow">Open to opportunities</p>
+                        <h3 class="cta-headline">
+                            I'm always open to discussing new opportunities, collaborations, or just having a chat about technology and innovation.
+                        </h3>
+                        <div class="cta-btns">
+                            <a href="mailto:dillanharan@gmail.com" class="btn-primary-hero">
+                                <i class="fas fa-envelope"></i> Say hello
+                                <i class="fas fa-arrow-up-right-from-square btn-arrow-sm"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/dillanharan" target="_blank" rel="noreferrer" class="btn-ghost-hero">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="contact-social">
-                    <a href="https://www.linkedin.com/in/dillanharan" target="_blank" class="social-btn" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
+
+                <!-- Info stack -->
+                <div class="contact-info-stack reveal-section">
+                    <a href="mailto:dillanharan@gmail.com" class="contact-info-item cii-violet">
+                        <span class="cii-icon ci-violet"><i class="fas fa-envelope"></i></span>
+                        <div class="cii-text">
+                            <p class="cii-label">Email</p>
+                            <p class="cii-value">dillanharan@gmail.com</p>
+                        </div>
+                        <i class="fas fa-arrow-up-right-from-square cii-arrow"></i>
                     </a>
-                    <a href="https://www.instagram.com/dillxn_19" target="_blank" class="social-btn" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
+                    <a href="tel:+15109538999" class="contact-info-item cii-cyan">
+                        <span class="cii-icon ci-cyan"><i class="fas fa-phone"></i></span>
+                        <div class="cii-text">
+                            <p class="cii-label">Phone</p>
+                            <p class="cii-value">(510) 953-8999</p>
+                        </div>
+                        <i class="fas fa-arrow-up-right-from-square cii-arrow"></i>
                     </a>
-                    <a href="Resume(Jun 2026) - Google Docs.pdf" target="_blank" class="social-btn" aria-label="Resume">
-                        <i class="fas fa-file-pdf"></i>
-                        <span>Resume</span>
-                    </a>
+                    <div class="contact-info-item cii-emerald">
+                        <span class="cii-icon ci-emerald"><i class="fas fa-map-marker-alt"></i></span>
+                        <div class="cii-text">
+                            <p class="cii-label">Location</p>
+                            <p class="cii-value">San Francisco, CA</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-socials-card">
+                        <p class="csc-label">Find me online</p>
+                        <div class="csc-icons">
+                            <a href="https://www.linkedin.com/in/dillanharan" target="_blank" rel="noreferrer" aria-label="LinkedIn" class="csc-icon csc-linkedin"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/dillxn_19" target="_blank" rel="noreferrer" aria-label="Instagram" class="csc-icon csc-instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:dillanharan@gmail.com" aria-label="Email" class="csc-icon csc-violet"><i class="fas fa-envelope"></i></a>
+                            <a href="Resume(Jun 2026) - Google Docs.pdf" target="_blank" aria-label="Resume" class="csc-icon csc-amber"><i class="fas fa-file-pdf"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    </main>
+
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Dillan Haran. All rights reserved.</p>
-            <p class="footer-tagline">Built with passion and code</p>
+        <div class="container footer-inner">
+            <span class="footer-logo">DH</span>
+            <p class="footer-copy">&copy; 2026 Dillan Haran. All rights reserved.</p>
+            <p class="footer-tag">Built with passion and code</p>
         </div>
     </footer>
 
